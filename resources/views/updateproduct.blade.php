@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="col-md-6 offset-md-3 mt-5">
-        <h1>Update Barang</h1>
+        <h1>Update Product</h1>
         <form action="{{route('update-product', $product->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')

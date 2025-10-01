@@ -2,15 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/catalogue', [ProductController::class, 'index'])->name('catalogue');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
-Route::get('/product/add', [ProductController::class, 'add'])->name('addproduct');
-Route::post('/product/add', [ProductController::class, 'create'])->name('create-product');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
-Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('edit-product');
-Route::patch('/product/edit/{id}', [ProductController::class, 'update'])->name('update-product');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::delete('/product/delete/{id}', [ProductController::class, 'destroy'])->name('delete-product');
+Route::get('/catalogue', [ProductController::class, 'index'])->name('catalogue')->middleware('simple.auth');
 
+Route::get('/product/add', [ProductController::class, 'add'])->name('addproduct')->middleware('simple.auth');
+Route::post('/product/add', [ProductController::class, 'create'])->name('create-product')->middleware('simple.auth');
 
+Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('edit-product')->middleware('simple.auth');
+Route::patch('/product/edit/{id}', [ProductController::class, 'update'])->name('update-product')->middleware('simple.auth');
+
+Route::delete('/product/delete/{id}', [ProductController::class, 'destroy'])->name('delete-product')->middleware('simple.auth');
